@@ -35,7 +35,7 @@ Xn1_arr = []
 Xn2_arr = []
 Xn3_arr = []
 
-for i in range(8):
+for i in range(8):  # cycle which append X_i_normed in main matrix (i for each factor)
     experiment_matrix[i + 1].append(round((X1_arr[i] - x0_arr[1])/dx_arr[1], 3))
     experiment_matrix[i + 1].append(round((X2_arr[i] - x0_arr[2]) / dx_arr[2], 3))
     experiment_matrix[i + 1].append(round((X3_arr[i] - x0_arr[3]) / dx_arr[3], 3))
