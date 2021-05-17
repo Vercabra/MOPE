@@ -291,7 +291,7 @@ while not flag:
                                                                                      Y_average[2],
                                                                                      Y_average[3]))
 
-    if Fp > Ft:
+    if d > len(ts) - d:
         print('Fp = {} > Ft = {}'.format(round(Fp, 3), Ft))
         print('Рівняння регресії неадекватно оригіналу при рівні значимості {}'.format(round(q, 2)))
     else:
