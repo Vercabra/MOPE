@@ -4,6 +4,7 @@ import sklearn.linear_model as lm
 from scipy.stats import f, t
 from functools import partial
 from pyDOE2 import *
+import time
 
 def regression(x, b):
     y = sum([x[i] * b[i] for i in range(len(x))])
@@ -173,6 +174,7 @@ def check(X, Y, B, n, m):
     disp = s_kv(Y, y_aver, n, m)
     print('Дисперсія y:', disp)
 
+    s_time = time.time()
     Gp = kriteriy_cochrana(Y, y_aver, n, m)
     print(f'Gp = {Gp}')
     if Gp < G_kr:
@@ -181,11 +183,14 @@ def check(X, Y, B, n, m):
         print("Необхідно збільшити кількість дослідів")
         m += 1
         main(n, m)
+    print(time.time() - s_time)
 
     ts = kriteriy_studenta(X[:, 1:], Y, y_aver, n, m)
     print('\nКритерій Стьюдента:\n', ts)
+    s_time = time.time()
     res = [t for t in ts if t > t_student]
     final_k = [B[i] for i in range(len(ts)) if ts[i] in res]
+    print(time.time() - s_time)
     print('\nКоефіцієнти {} статистично незначущі, тому ми виключаємо їх з рівняння.'.format(
         [round(i, 3) for i in B if i not in final_k]))
 
@@ -204,7 +209,7 @@ def check(X, Y, B, n, m):
     f4 = n - d
 
     F_p = kriteriy_fishera(Y, y_aver, y_new, n, m, d)
-
+    s_time = time.time()
     fisher = partial(f.ppf, q=0.95)
     f_t = fisher(dfn=f4, dfd=f3)  # табличне знач
     print('\nПеревірка адекватності за критерієм Фішера')
@@ -214,7 +219,7 @@ def check(X, Y, B, n, m):
         print('Математична модель адекватна експериментальним даним')
     else:
         print('Математична модель не адекватна експериментальним даним')
-
+    print(time.time() - s_time)
 def main(n, m):
     X5, Y5, X5_norm = plan_matrix5(n, m)
 
